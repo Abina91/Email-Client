@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniMail - Email Client</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Authentication Section -->
+        <div id="auth-section" class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <div class="logo">
+                        <div class="logo-icon">✉️</div>
+                        <h1>MiniMail</h1>
+                    </div>
+                </div>
+
+                <!-- Login Form -->
+                <div id="login-form" class="auth-form active">
+                    <h2>Welcome Back</h2>
+                    <p class="auth-subtitle">Sign in to your account</p>
+                    
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="email" id="loginEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Sign In</button>
+                    </form>
+                    
+                    <p class="auth-switch">
+                        Don't have an account? 
+                        <a href="#" id="showRegister">Create one</a>
+                    </p>
+                </div>
+
+                <!-- Register Form -->
+                <div id="register-form" class="auth-form">
+                    <h2>Create Account</h2>
+                    <p class="auth-subtitle">Join MiniMail today</p>
+                    
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label for="registerName">Full Name</label>
+                            <input type="text" id="registerName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerEmail">Email</label>
+                            <input type="email" id="registerEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">Password</label>
+                            <input type="password" id="registerPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create Account</button>
+                    </form>
+                    
+                    <p class="auth-switch">
+                        Already have an account? 
+                        <a href="#" id="showLogin">Sign in</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard-section" class="dashboard-container hidden">
+            <header class="dashboard-header">
+                <div class="header-content">
+                    <div class="logo">
+                        <div class="logo-icon">✉️</div>
+                        <h1>MiniMail</h1>
+                    </div>
+                    <div class="user-info">
+                        <span id="userName">User</span>
+                        <button id="logoutBtn" class="btn btn-outline">Logout</button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-body">
+                <nav class="sidebar">
+                    <div class="nav-item active" data-view="inbox">
+                        <span class="nav-icon">📥</span>
+                        <span>Inbox</span>
+                        <span id="unreadCount" class="badge">0</span>
+                    </div>
+                    <div class="nav-item" data-view="compose">
+                        <span class="nav-icon">✍️</span>
+                        <span>Compose</span>
+                    </div>
+                    <div class="nav-item" data-view="sent">
+                        <span class="nav-icon">📤</span>
+                        <span>Sent</span>
+                    </div>
+                </nav>
+
+                <main class="main-content">
+                    <!-- Inbox View -->
+                    <div id="inbox-view" class="view active">
+                        <div class="view-header">
+                            <h2>Inbox</h2>
+                            <button id="refreshBtn" class="btn btn-outline">🔄 Refresh</button>
+                        </div>
+                        <div id="emailList" class="email-list">
+                            <!-- Emails will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Compose View -->
+                    <div id="compose-view" class="view">
+                        <div class="view-header">
+                            <h2>Compose Message</h2>
+                        </div>
+                        <form id="composeForm" class="compose-form">
+                            <div class="form-group">
+                                <label for="toEmail">To</label>
+                                <input type="email" id="toEmail" placeholder="recipient@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <input type="text" id="subject" placeholder="Enter subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" rows="12" placeholder="Type your message here..." required></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Send Message</button>
+                                <button type="button" id="saveDraftBtn" class="btn btn-outline">Save Draft</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Sent View -->
+                    <div id="sent-view" class="view">
+                        <div class="view-header">
+                            <h2>Sent Messages</h2>
+                        </div>
+                        <div id="sentList" class="email-list">
+                            <!-- Sent emails will be populated here -->
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <!-- Email Modal -->
+        <div id="emailModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalSubject">Email Subject</h3>
+                    <button id="closeModal" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="email-meta">
+                        <div><strong>From:</strong> <span id="modalFrom"></span></div>
+                        <div><strong>To:</strong> <span id="modalTo"></span></div>
+                        <div><strong>Date:</strong> <span id="modalDate"></span></div>
+                    </div>
+                    <div class="email-content">
+                        <p id="modalMessage"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div id="toast-container" class="toast-container"></div>
+    </div>
+
+    <script src="storage.js"></script>
+    <script src="auth.js"></script>
+    <script src="email.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
